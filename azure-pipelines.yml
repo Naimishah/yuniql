@@ -27,3 +27,5 @@ steps:
     workspacePath: '$(Build.SourcesDirectory)\yuniql\samples\basic-postgresql-sample'
     targetPlatform: 'PostgreSql'
     additionalArguments: '--debug'
+
+
