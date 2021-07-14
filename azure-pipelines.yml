@@ -1,0 +1,31 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+- task: CmdLine@2
+  displayName: clone postgresql samples repo
+  inputs:
+    script: |
+      git clone https://github.com/Naimishah/yuniql.git $(Build.SourcesDirectory)\yuniql
+- task: UseYUNIQLCLI@1
+  displayName: yuniql install
+  inputs:
+    version: 'latest'
+- task: RunYUNIQLCLI@1
+  displayName: yuniql run
+  inputs:
+    version: 'latest'
+    connectionString: '$(AZPostgreSqlDemoDatabase)'
+    workspacePath: '$(Build.SourcesDirectory)\yuniql\samples\basic-postgresql-sample'
+    targetPlatform: 'PostgreSql'
+    additionalArguments: '--debug'
+
+
